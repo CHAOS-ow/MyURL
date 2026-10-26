@@ -6,7 +6,7 @@ image: /assets/img/2017/02/westworld-creation-of-adam.webp
 related: []
 wordpress: https://myurl.wordpress.com/2017/02/15/westworld-quotes/
 ---
-![Westworld (quotes)](/assets/img/2017/02/westworld-creation-of-adam.webp)
+![Westworld (quotes)]({{ site.baseurl }}/assets/img/2017/02/westworld-creation-of-adam.webp)
 
 *Any man whose errors take ten years to correct is quite a man.*
 - J. Robert Oppenheimer. (An American physicist who pioneered the development of the first nuclear weapons used during WWII. "Now I am become Death, the destroyer of worlds.")

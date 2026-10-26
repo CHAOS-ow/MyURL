@@ -29,11 +29,11 @@ topic: thoughts          # one word; new topics appear in the filters automatica
 image: /assets/img/2026/10/photo.jpg   # optional; makes it an image card
 related: [choshim, free-spirited]      # optional; slugs of other posts
 ---
-Body in markdown. Images: ![alt](/assets/img/2026/10/photo.jpg)
+Body in markdown. Images: ![alt]({{ site.baseurl }}/assets/img/2026/10/photo.jpg)  (the baseurl part is required while the site lives under /MyURL)
 YouTube: <div class="video"><iframe src="https://www.youtube.com/embed/VIDEO_ID" allowfullscreen></iframe></div>
 ```
 
-Cards on the wall: a post with `image` becomes an image card; a post under 40 words becomes a quote card; everything else is title + excerpt (first paragraph).
+Cards on the wall: a post with `topic: photo` and an `image` becomes an image card; written posts always show title first; a post under 40 words becomes a quote card; everything else is title + excerpt (first paragraph).
 
 `related` is one-directional in the file but shows both ways on the site (a "linked from" list appears on the target post).
 

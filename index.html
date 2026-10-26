@@ -14,10 +14,11 @@ title: My URL
 <div class="grid" id="grid">
 {% for post in site.posts %}
   {% assign words = post.content | strip_html | number_of_words %}
-  <a class="card {% if post.image %}has-img{% elsif words < 40 %}ink{% else %}plain{% endif %}" href="{{ post.url | relative_url }}" data-t="{{ post.topic }}">
-    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+  {% assign photo = false %}{% if post.topic == "photo" and post.image %}{% assign photo = true %}{% endif %}
+  <a class="card {% if photo %}has-img{% elsif words < 40 %}ink{% else %}plain{% endif %}" href="{{ post.url | relative_url }}" data-t="{{ post.topic }}">
+    {% if photo %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
     <div class="tag"><span>{{ post.topic }}</span><time>{{ post.date | date: "%b %Y" | downcase }}</time></div>
-    {% if post.image %}
+    {% if photo %}
       {% if post.excerpt and post.excerpt != "" %}<p>{{ post.excerpt | strip_html | truncatewords: 18 }}</p>{% else %}<h3>{{ post.title }}</h3>{% endif %}
     {% elsif words < 40 %}
       <p class="q">{{ post.content | strip_html | strip }}</p>

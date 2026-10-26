@@ -7,6 +7,6 @@ tags: [slideshow]
 related: []
 wordpress: https://myurl.wordpress.com/2015/12/28/information-kiosk/
 ---
-![Information Kiosk](/assets/img/2015/12/information-kiosk.jpg)
+![Information Kiosk]({{ site.baseurl }}/assets/img/2015/12/information-kiosk.jpg)
 
 

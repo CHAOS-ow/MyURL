@@ -12,7 +12,7 @@ What my mentor really showed me was not the path to take or what to do, but that
 
 That excitement is only that way because it is also fearful. What if I fail? What about my obligations? What if I waste time? I've been at this stage for a while and have realized that these mental barriers have become a reality in my life. But when you give yourself no other options, you make it happen. No more what if's, Just Do It.
 
-![Stages of Change](/assets/img/2016/06/free-spirited-stages-of-change.jpg)
+![Stages of Change]({{ site.baseurl }}/assets/img/2016/06/free-spirited-stages-of-change.jpg)
 
 Stages of Change
 https://en.wikipedia.org/wiki/Transtheoretical\_model#Stages\_of\_change

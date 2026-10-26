@@ -74,7 +74,7 @@ def main(xml):
     def local(u):
         rel = u.replace(SRC_HOST, '')
         images[u] = f'assets/img/{rel}'
-        return f'/assets/img/{rel}'
+        return f'{{{{ site.baseurl }}}}/assets/img/{rel}'
 
     (ROOT / '_posts').mkdir(exist_ok=True); (ROOT / '_drafts').mkdir(exist_ok=True)
     n = 0
