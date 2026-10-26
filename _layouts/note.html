@@ -1,0 +1,50 @@
+---
+layout: default
+---
+<div class="notewrap">
+  <article class="note sheet" data-t="{{ page.section }}">
+    <div class="kicker">
+      <a href="{{ '/notes/' | relative_url }}">Notes</a><span class="sep">/</span><a href="{{ '/notes/' | relative_url }}#{{ page.section }}">{{ page.section }}</a>
+      {% if page.updated %}<span class="u">updated {{ page.updated | date: "%b %-d, %Y" }}</span>{% endif %}
+    </div>
+    <h1>{{ page.title }}</h1>
+    {% if page.summary %}<p class="dek">{{ page.summary }}</p>{% endif %}
+    <div class="prose" id="note-body">
+      {{ content }}
+    </div>
+
+    {% assign back = "" | split: "" %}
+    {% for p in site.posts %}{% if p.related contains page.slug %}{% assign back = back | push: p %}{% endif %}{% endfor %}
+    {% for n in site.notes %}{% if n.related contains page.slug and n.url != page.url %}{% assign back = back | push: n %}{% endif %}{% endfor %}
+    <div class="nfoot">
+      {% if back.size > 0 %}<span>Mentioned in: {% for p in back %}<a href="{{ p.url | relative_url }}">{{ p.title }}</a>{% unless forloop.last %} · {% endunless %}{% endfor %}</span>{% endif %}
+      <span>Working notes. May be incomplete or wrong. Check the primary source.</span>
+    </div>
+  </article>
+
+  <aside class="toc" id="toc">
+    <span class="lbl">On this page</span>
+    <div id="toc-links"></div>
+    {% if page.related.size > 0 %}
+    <div class="rel"><span class="lbl">Related</span>
+      {% for s in page.related %}
+        {% assign p = site.notes | where: "slug", s | first %}
+        {% unless p %}{% assign p = site.posts | where: "slug", s | first %}{% endunless %}
+        {% if p %}<a href="{{ p.url | relative_url }}">{{ p.title }}<small>{% if p.topic %}{{ p.topic }}{% else %}{{ p.section }}{% endif %}</small></a>{% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+  </aside>
+</div>
+<script>
+(function(){
+  var hs=document.querySelectorAll('#note-body h2, #note-body h3'),box=document.getElementById('toc-links');
+  if(!hs.length){document.getElementById('toc').hidden=true;return}
+  hs.forEach(function(h,i){if(!h.id)h.id='s'+i;var a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;if(h.tagName==='H3')a.className='sub';box.appendChild(a)});
+  var links=box.querySelectorAll('a');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(l){l.classList.toggle('on',l.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-10% 0px -70% 0px'});
+    hs.forEach(function(h){io.observe(h)});
+  }
+})();
+</script>

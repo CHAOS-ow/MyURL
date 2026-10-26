@@ -1,0 +1,39 @@
+---
+layout: default
+title: Notes
+permalink: /notes/
+---
+<div class="nhead">
+  <div><h1>Notes</h1><p>A compilation of things to know. Reference, not reading.</p></div>
+  <label class="search"><input id="nsearch" type="search" placeholder="Search notes…" autocomplete="off"></label>
+</div>
+
+{% assign sections = site.notes | map: "section" | uniq | sort %}
+<div class="idx" id="idx">
+{% for s in sections %}
+  {% assign docs = site.notes | where: "section", s | sort: "updated" | reverse %}
+  <div class="sec" data-t="{{ s }}" id="{{ s }}">
+    <h3><span>{{ s }}</span><small>{{ docs | size }}</small></h3>
+    {% for n in docs %}
+    <a href="{{ n.url | relative_url }}" class="{% if n.parent %}sub{% endif %}" data-q="{{ n.title | downcase }} {{ n.summary | downcase }} {{ n.tags | join: ' ' | downcase }}">
+      <span>{{ n.title }}</span>{% if n.updated %}<time>{{ n.updated | date: "%b %Y" | downcase }}</time>{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+{% endfor %}
+{% if sections.size == 0 %}<p class="empty">Nothing here yet.</p>{% endif %}
+</div>
+<p class="ndisc">Working notes. They may be incomplete, out of date, or wrong. Always check the primary source.</p>
+
+<script>
+(function(){
+  var q=document.getElementById('nsearch'),links=document.querySelectorAll('#idx .sec a'),secs=document.querySelectorAll('#idx .sec');
+  function run(){
+    var v=q.value.trim().toLowerCase();
+    links.forEach(function(a){a.hidden=!!v&&a.dataset.q.indexOf(v)<0});
+    secs.forEach(function(s){s.hidden=!!v&&!s.querySelector('a:not([hidden])')});
+  }
+  q.addEventListener('input',run);
+  document.addEventListener('keydown',function(e){if(e.key==='/'&&document.activeElement!==q){e.preventDefault();q.focus()}});
+})();
+</script>

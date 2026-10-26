@@ -5,6 +5,6 @@ permalink: /about/
 topic: about
 ---
 
-This site has no purpose, on purpose. It's where I put things down: thoughts, pictures, quotes, sometimes a video. Whatever direction it takes, it takes.
+My URL is a compilation of things to know. Thoughts, pictures, quotes, and notes, kept here so I can find them again.
 
-The older posts (2015–2024) came over from my WordPress blog of the same name. The professional side of me lives at [chaos-ow.github.io](https://chaos-ow.github.io).
+No theme, no schedule. The older posts came over from the WordPress blog of the same name.

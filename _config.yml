@@ -1,6 +1,6 @@
 # Site
 title: My URL
-description: A place to put things down. Thoughts, pictures, quotes, whatever's next.
+description: A compilation of things to know. Thoughts, pictures, quotes, notes.
 url: "https://chaos-ow.github.io"
 baseurl: "/MyURL"          # change to "" if this becomes the root site or gets a custom domain
 author: CHAOS
@@ -10,13 +10,30 @@ lang: en
 permalink: /:year/:month/:day/:title/
 timezone: America/Los_Angeles
 
-# Posts
+# Notes: undated reference pages. _notes/<section>/<name>.md -> /notes/<section>/<name>/
+collections:
+  notes:
+    output: true
+    permalink: /notes/:path/
+
 excerpt_separator: "\n\n"
 defaults:
   - scope: {path: "", type: posts}
     values: {layout: post, related: []}
+  - scope: {path: "", type: notes}
+    values: {layout: note, related: []}
 
-# Plugins (all whitelisted on GitHub Pages — no build step needed)
+# Topic colors (Icelandic palette). Any topic/section not listed falls back to ink.
+topic_colors:
+  thoughts: "#2E4B58"
+  photo:    "#B0282C"
+  finance:  "#3F672B"
+  health:   "#696405"
+  quotes:   "#B0282C"
+  drk:      "#2E4B58"
+  ballet:   "#696405"
+  making:   "#5E889B"
+
 plugins:
   - jekyll-feed
   - jekyll-seo-tag
@@ -25,6 +42,6 @@ feed:
   path: feed.xml
 
 markdown: kramdown
-kramdown: {input: GFM, hard_wrap: false}
+kramdown: {input: GFM, hard_wrap: false, auto_ids: true}
 
 exclude: [_import, Gemfile, Gemfile.lock, README.md, vendor, node_modules]

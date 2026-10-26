@@ -1,42 +1,46 @@
 ---
 layout: default
 ---
-<article class="post">
-  <div class="crumbs"><a href="{{ '/' | relative_url }}">everything</a><span>/</span><a href="{{ '/' | relative_url }}#{{ page.topic }}">{{ page.topic }}</a></div>
-  <h1>{{ page.title }}</h1>
-  <div class="pmeta">
-    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" | downcase }}</time>
-    {% if page.tags.size > 0 %}<span>{{ page.tags | join: " · " }}</span>{% endif %}
+<article class="post sheet" data-t="{{ page.topic }}">
+  <div class="kicker">
+    <a href="{{ '/' | relative_url }}#{{ page.topic }}">{{ page.topic }}</a>
+    <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>
   </div>
+  <h1>{{ page.title }}</h1>
   <div class="prose">
     {{ content }}
   </div>
 
-  {%- comment -%} related: listed in front matter by slug; backlinks: posts that list this one {%- endcomment -%}
+  {%- comment -%} related: slugs of posts or notes listed in front matter; backlinks: anything that lists this page {%- endcomment -%}
   {% assign rel = page.related %}
   {% assign back = "" | split: "" %}
   {% for p in site.posts %}{% if p.related contains page.slug and p.url != page.url %}{% assign back = back | push: p %}{% endif %}{% endfor %}
+  {% for n in site.notes %}{% if n.related contains page.slug %}{% assign back = back | push: n %}{% endif %}{% endfor %}
   {% if rel.size > 0 or back.size > 0 %}
   <aside class="related">
     {% if rel.size > 0 %}
-    <span class="lbl">related</span>
+    <span class="lbl">Related</span>
     <div class="rlist">
-      {% for s in rel %}{% assign p = site.posts | where: "slug", s | first %}{% if p %}
-      <a href="{{ p.url | relative_url }}"><span>{{ p.title }}</span><small>{{ p.topic }} · {{ p.date | date: "%Y" }}</small></a>
-      {% endif %}{% endfor %}
+      {% for s in rel %}
+        {% assign p = site.posts | where: "slug", s | first %}
+        {% unless p %}{% assign p = site.notes | where: "slug", s | first %}{% endunless %}
+        {% if p %}<a href="{{ p.url | relative_url }}"><span>{{ p.title }}</span><small>{% if p.topic %}{{ p.topic }} · {{ p.date | date: "%Y" }}{% else %}notes / {{ p.section }}{% endif %}</small></a>{% endif %}
+      {% endfor %}
     </div>
     {% endif %}
     {% if back.size > 0 %}
-    <span class="lbl">linked from</span>
+    <span class="lbl">Linked from</span>
     <div class="rlist">
-      {% for p in back %}<a href="{{ p.url | relative_url }}"><span>{{ p.title }}</span><small>{{ p.topic }} · {{ p.date | date: "%Y" }}</small></a>{% endfor %}
+      {% for p in back %}<a href="{{ p.url | relative_url }}"><span>{{ p.title }}</span><small>{% if p.topic %}{{ p.topic }} · {{ p.date | date: "%Y" }}{% else %}notes / {{ p.section }}{% endif %}</small></a>{% endfor %}
     </div>
     {% endif %}
   </aside>
   {% endif %}
 
+  {% if page.next or page.previous %}
   <nav class="pager">
     {% if page.next %}<a href="{{ page.next.url | relative_url }}">← {{ page.next.title }}</a>{% else %}<span></span>{% endif %}
     {% if page.previous %}<a href="{{ page.previous.url | relative_url }}">{{ page.previous.title }} →</a>{% endif %}
   </nav>
+  {% endif %}
 </article>
