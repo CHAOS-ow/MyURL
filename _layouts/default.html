@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+{% seo %}
+<link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ '/feed.xml' | relative_url }}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,300;1,6..72,400&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+</head>
+<body class="{{ layout.body_class | default: page.layout }}">
+<nav class="nav">
+  <a class="wordmark" href="{{ '/' | relative_url }}"><span class="dot"></span>{{ site.title }}</a>
+  <ul>
+    <li><a href="{{ '/' | relative_url }}" {% if page.url == '/' %}class="on"{% endif %}>everything</a></li>
+    <li><a href="{{ '/about/' | relative_url }}" {% if page.url == '/about/' %}class="on"{% endif %}>about</a></li>
+    <li><a href="{{ '/feed.xml' | relative_url }}">rss</a></li>
+  </ul>
+</nav>
+<main class="wrap">
+{{ content }}
+</main>
+<footer class="foot">
+  <div>
+    <span class="lbl">topics</span>
+    <div class="chips">
+      {% assign topics = site.posts | map: "topic" | uniq | sort %}
+      {% for t in topics %}<a href="{{ '/' | relative_url }}#{{ t }}">{{ t }} <small>{{ site.posts | where: "topic", t | size }}</small></a>{% endfor %}
+    </div>
+  </div>
+  <div>
+    <span class="lbl">elsewhere</span>
+    <div class="chips">
+      <a href="https://chaos-ow.github.io">practice &amp; papers</a>
+      <a href="{{ '/feed.xml' | relative_url }}">rss</a>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,30 @@
+# Site
+title: My URL
+description: A place to put things down. Thoughts, pictures, quotes, whatever's next.
+url: "https://chaos-ow.github.io"
+baseurl: "/MyURL"          # change to "" if this becomes the root site or gets a custom domain
+author: CHAOS
+lang: en
+
+# URLs mirror the old WordPress ones (/2016/01/02/just-do-it/) so old links can be redirected 1:1
+permalink: /:year/:month/:day/:title/
+timezone: America/Los_Angeles
+
+# Posts
+excerpt_separator: "\n\n"
+defaults:
+  - scope: {path: "", type: posts}
+    values: {layout: post, related: []}
+
+# Plugins (all whitelisted on GitHub Pages — no build step needed)
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+feed:
+  path: feed.xml
+
+markdown: kramdown
+kramdown: {input: GFM, hard_wrap: false}
+
+exclude: [_import, Gemfile, Gemfile.lock, README.md, vendor, node_modules]

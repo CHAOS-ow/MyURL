@@ -1,0 +1,43 @@
+---
+layout: default
+title: My URL
+---
+<header class="head">
+  <h1>Things I'm <em>keeping.</em></h1>
+  <div class="filters" id="filters">
+    <button class="on" data-t="all">all</button>
+    {% assign topics = site.posts | map: "topic" | uniq | sort %}
+    {% for t in topics %}<button data-t="{{ t }}">{{ t }}</button>{% endfor %}
+  </div>
+</header>
+
+<div class="grid" id="grid">
+{% for post in site.posts %}
+  {% assign words = post.content | strip_html | number_of_words %}
+  <a class="card {% if post.image %}has-img{% elsif words < 40 %}ink{% else %}plain{% endif %}" href="{{ post.url | relative_url }}" data-t="{{ post.topic }}">
+    {% if post.image %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+    <div class="tag"><span>{{ post.topic }}</span><time>{{ post.date | date: "%b %Y" | downcase }}</time></div>
+    {% if post.image %}
+      {% if post.excerpt and post.excerpt != "" %}<p>{{ post.excerpt | strip_html | truncatewords: 18 }}</p>{% else %}<h3>{{ post.title }}</h3>{% endif %}
+    {% elsif words < 40 %}
+      <p class="q">{{ post.content | strip_html | strip }}</p>
+      <small>{{ post.title }}</small>
+    {% else %}
+      <h3>{{ post.title }}</h3>
+      <p>{{ post.excerpt | strip_html | truncatewords: 28 }}</p>
+    {% endif %}
+  </a>
+{% endfor %}
+</div>
+
+<script>
+(function(){
+  var btns=document.querySelectorAll('#filters button'),cards=document.querySelectorAll('#grid .card');
+  function pick(t){
+    btns.forEach(function(b){b.classList.toggle('on',b.dataset.t===t)});
+    cards.forEach(function(c){c.hidden=(t!=='all'&&c.dataset.t!==t)});
+  }
+  btns.forEach(function(b){b.addEventListener('click',function(){pick(b.dataset.t);history.replaceState(null,'',b.dataset.t==='all'?location.pathname:'#'+b.dataset.t)})});
+  var h=location.hash.slice(1); if(h&&document.querySelector('#filters [data-t="'+h+'"]'))pick(h);
+})();
+</script>
