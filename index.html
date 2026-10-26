@@ -7,7 +7,7 @@ title: My URL
   {% assign words = post.content | strip_html | number_of_words %}
   {% assign photo = false %}{% if post.topic == "photo" and post.image %}{% assign photo = true %}{% endif %}
   <a class="card sheet {% if photo %}has-img{% elsif words < 40 %}quote{% endif %}" href="{{ post.url | relative_url }}" data-t="{{ post.topic }}">
-    {% if photo %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}" loading="lazy">{% endif %}
+    {% if photo %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}">{% endif %}
     <div class="kicker"><span>{{ post.topic }}</span><time>{{ post.date | date: "%b %Y" }}</time></div>
     {% if photo %}
       <h3>{{ post.title }}</h3>
@@ -26,13 +26,25 @@ title: My URL
 
 <script>
 (function(){
-  var nav=document.querySelectorAll('.sections a[data-f]'),cards=document.querySelectorAll('#grid .card');
-  function pick(t){
-    nav.forEach(function(a){a.classList.toggle('on',a.dataset.f===t)});
-    cards.forEach(function(c){c.hidden=(t!=='all'&&c.dataset.t!==t)});
+  var grid=document.getElementById('grid'),nav=document.querySelectorAll('.sections a[data-f]');
+  var cards=Array.prototype.slice.call(grid.querySelectorAll('.card')),current='all';
+  // masonry that keeps reading order left-to-right (CSS columns fill top-to-bottom, which scrambles the chronology)
+  function layout(){
+    var w=grid.clientWidth,n=w>=900?3:(w>=600?2:1);
+    grid.innerHTML='';grid.classList.add('js');grid.style.setProperty('--n',n);
+    var cols=[];for(var i=0;i<n;i++){var c=document.createElement('div');c.className='col';grid.appendChild(c);cols.push(c)}
+    cards.forEach(function(card){
+      card.hidden=(current!=='all'&&card.dataset.t!==current);if(card.hidden)return;
+      var min=cols[0];cols.forEach(function(c){if(c.offsetHeight<min.offsetHeight)min=c});min.appendChild(card);
+    });
   }
+  function pick(t){current=t;nav.forEach(function(a){a.classList.toggle('on',a.dataset.f===t)});layout()}
   function fromHash(){var h=location.hash.slice(1);pick(h&&document.querySelector('.sections a[data-f="'+h+'"]')?h:'all')}
   nav.forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=a.dataset.f;history.replaceState(null,'',t==='all'?location.pathname:'#'+t);pick(t)})});
-  window.addEventListener('hashchange',fromHash);fromHash();
+  window.addEventListener('hashchange',fromHash);
+  var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(layout,120)});
+  fromHash();
+  // images change heights as they arrive; re-balance once they are in
+  grid.querySelectorAll('img').forEach(function(i){if(!i.complete)i.addEventListener('load',function(){clearTimeout(rt);rt=setTimeout(layout,60)})});
 })();
 </script>

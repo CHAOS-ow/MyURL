@@ -41,6 +41,9 @@ img{max-width:100%;display:block}
 
 /* the wall */
 .grid{columns:3 280px;column-gap:20px;padding-top:28px}
+.grid.js{columns:auto;display:grid;grid-template-columns:repeat(var(--n,3),minmax(0,1fr));gap:20px;align-items:start}
+.grid.js .col{display:flex;flex-direction:column;gap:20px;min-width:0}
+.grid.js .card{margin-bottom:0}
 .card{break-inside:avoid;margin-bottom:20px;padding:20px 20px 18px;display:flex;flex-direction:column;gap:10px;min-width:0;border-top:3px solid var(--tc);position:relative;transition:transform .32s cubic-bezier(.2,.7,.2,1),box-shadow .32s}
 .card:hover{transform:translateY(-3px) rotate(-.35deg);box-shadow:var(--shadow-hover)}
 .card img{margin:-20px -20px 4px;width:calc(100% + 40px);max-width:none;border-bottom:1px solid var(--line)}
