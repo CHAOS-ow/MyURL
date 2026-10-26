@@ -1,0 +1,33 @@
+
+/* ---- front page: newspaper (no boxes) ---- */
+.front{padding-top:22px}
+.nyt{display:grid;grid-template-columns:1.1fr 1.5fr 1fr;gap:0;align-items:start}
+.nyt>div{padding:0 22px;min-width:0}.nyt>div:first-child{padding-left:0}.nyt>div:last-child{padding-right:0}
+.nyt>div+div{border-left:1px solid var(--line)}
+.it{display:block;padding:14px 0;border-bottom:1px solid var(--line);min-width:0;color:var(--ink)}
+.it:first-child{padding-top:0}
+.it .kicker{margin-bottom:6px}
+.it h3{font-weight:700;font-size:1.25rem;line-height:1.15;margin-bottom:6px;letter-spacing:-.01em;text-wrap:balance;transition:color .2s}
+.it p{font-size:14px;color:var(--ink-soft);line-height:1.45}
+.it img{margin:0 0 10px;border:1px solid var(--line)}
+.it .q{font-size:1.05rem;font-style:italic;font-weight:500;color:var(--ink);line-height:1.35;margin-bottom:4px}
+.it .by{font-family:var(--sans);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:600}
+.it:hover h3,.it:hover .q{color:var(--tc)}
+.it.big h3{font-size:clamp(1.8rem,3vw,2.3rem);line-height:1.05;margin-bottom:8px}
+.it.big p{font-size:15.5px}
+.it.big img{margin-bottom:12px}
+.it.rail h3{font-style:italic;font-weight:600;font-size:1.1rem;margin:0}
+.it.rail .kicker{margin-bottom:4px}
+.op .hd,.ig .hd{font-family:var(--sans);font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;border-bottom:1px solid var(--rule);padding-bottom:6px;margin-bottom:4px}
+.op .it:first-of-type{padding-top:10px}
+.ig{margin-top:22px}
+.ig .instagram-media{margin:10px 0 0!important;min-width:0!important;max-width:100%!important;border:1px solid var(--line)!important;box-shadow:none!important;border-radius:0!important}
+.below{margin-top:26px;border-top:1px solid var(--line-strong);padding-top:18px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 0}
+.below .it{padding:0 18px 18px;border:0;border-left:1px solid var(--line);margin-bottom:6px}
+.below .it:nth-child(4n+1){border-left:0;padding-left:0}
+.below .it h3{font-size:1.15rem}
+.below .it p{font-size:13.5px}
+.filtered{margin-top:0;border-top:0;padding-top:24px}
+.filtered .it[hidden]{display:none}
+@media(max-width:900px){.nyt{grid-template-columns:1fr 1fr}.nyt .colC{grid-column:1/-1;grid-row:1;border-left:0!important;padding:0 0 10px;border-bottom:1px solid var(--line-strong);margin-bottom:10px}.nyt .colL{padding-left:0}.below{grid-template-columns:1fr 1fr}.below .it:nth-child(4n+1){border-left:1px solid var(--line);padding-left:18px}.below .it:nth-child(2n+1){border-left:0;padding-left:0}}
+@media(max-width:560px){.nyt{grid-template-columns:1fr}.nyt>div{padding:0!important;border-left:0!important}.below{grid-template-columns:1fr}.below .it{border-left:0;padding-left:0}}

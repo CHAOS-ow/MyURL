@@ -2,49 +2,61 @@
 layout: default
 title: My URL
 ---
-<div class="grid" id="grid">
+{%- comment -%}
+Front page, newspaper logic, no tagging needed:
+  rail  = quotes + any post under 60 words
+  lead  = newest of the rest; left = next three; below = everything after that
+{%- endcomment -%}
+{% assign rail = "" | split: "" %}
+{% assign main = "" | split: "" %}
 {% for post in site.posts %}
   {% assign words = post.content | strip_html | number_of_words %}
-  {% assign photo = false %}{% if post.topic == "photo" and post.image %}{% assign photo = true %}{% endif %}
-  <a class="card sheet {% if photo %}has-img{% elsif words < 40 %}quote{% endif %}" href="{{ post.url | relative_url }}" data-t="{{ post.topic }}">
-    {% if photo %}<img src="{{ post.image | relative_url }}" alt="{{ post.title }}">{% endif %}
-    <div class="kicker"><span>{{ post.topic }}</span><time>{{ post.date | date: "%b %Y" }}</time></div>
-    {% if photo %}
-      <h3>{{ post.title }}</h3>
-      {% if post.excerpt and post.excerpt != "" %}<p>{{ post.excerpt | strip_html | truncatewords: 18 }}</p>{% endif %}
-    {% elsif words < 40 %}
-      <p class="q">“{{ post.content | strip_html | strip }}”</p>
-      <span class="by">{{ post.title }}</span>
-    {% else %}
-      <h3>{{ post.title }}</h3>
-      <p>{{ post.excerpt | strip_html | truncatewords: 28 }}</p>
-    {% endif %}
-    <span class="cont">continued →</span>
-  </a>
+  {% if post.topic == "quotes" or words < 60 %}{% assign rail = rail | push: post %}{% else %}{% assign main = main | push: post %}{% endif %}
 {% endfor %}
+{% assign lead = main[0] %}
+
+<div class="front" id="front">
+  <div class="nyt">
+    <div class="colL">
+      {% for post in main offset:1 limit:3 %}{% include item.html post=post %}{% endfor %}
+    </div>
+    <div class="colC">
+      {% include item.html post=lead big=true %}
+      {% for post in main offset:4 limit:1 %}{% include item.html post=post %}{% endfor %}
+    </div>
+    <div class="colR op">
+      <div class="hd">Quotes &amp; thoughts</div>
+      {% for post in rail limit:7 %}{% include item.html post=post rail=true %}{% endfor %}
+      {% if site.data.instagram.url %}
+      <div class="ig">
+        <div class="hd">From Instagram</div>
+        <blockquote class="instagram-media" data-instgrm-captioned data-instgrm-permalink="{{ site.data.instagram.url }}" data-instgrm-version="14"><a href="{{ site.data.instagram.url }}">{{ site.data.instagram.url }}</a></blockquote>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+  <div class="below">
+    {% for post in main offset:5 %}{% include item.html post=post %}{% endfor %}
+    {% for post in rail offset:7 %}{% include item.html post=post %}{% endfor %}
+  </div>
 </div>
 
+{%- comment -%} filtered view: plain grid of one topic, shown when a section is picked {%- endcomment -%}
+<div class="below filtered" id="filtered" hidden>
+  {% for post in site.posts %}{% include item.html post=post %}{% endfor %}
+</div>
+
+{% if site.data.instagram.url %}<script async src="https://www.instagram.com/embed.js"></script>{% endif %}
 <script>
 (function(){
-  var grid=document.getElementById('grid'),nav=document.querySelectorAll('.sections a[data-f]');
-  var cards=Array.prototype.slice.call(grid.querySelectorAll('.card')),current='all';
-  // masonry that keeps reading order left-to-right (CSS columns fill top-to-bottom, which scrambles the chronology)
-  function layout(){
-    var w=grid.clientWidth,n=w>=900?3:(w>=600?2:1);
-    grid.innerHTML='';grid.classList.add('js');grid.style.setProperty('--n',n);
-    var cols=[];for(var i=0;i<n;i++){var c=document.createElement('div');c.className='col';grid.appendChild(c);cols.push(c)}
-    cards.forEach(function(card){
-      card.hidden=(current!=='all'&&card.dataset.t!==current);if(card.hidden)return;
-      var min=cols[0];cols.forEach(function(c){if(c.offsetHeight<min.offsetHeight)min=c});min.appendChild(card);
-    });
+  var nav=document.querySelectorAll('.sections a[data-f]'),front=document.getElementById('front'),flt=document.getElementById('filtered'),items=flt.querySelectorAll('.it');
+  function pick(t){
+    nav.forEach(function(a){a.classList.toggle('on',a.dataset.f===t)});
+    var all=(t==='all');front.hidden=!all;flt.hidden=all;
+    if(!all)items.forEach(function(i){i.hidden=(i.dataset.t!==t)});
   }
-  function pick(t){current=t;nav.forEach(function(a){a.classList.toggle('on',a.dataset.f===t)});layout()}
   function fromHash(){var h=location.hash.slice(1);pick(h&&document.querySelector('.sections a[data-f="'+h+'"]')?h:'all')}
   nav.forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=a.dataset.f;history.replaceState(null,'',t==='all'?location.pathname:'#'+t);pick(t)})});
-  window.addEventListener('hashchange',fromHash);
-  var rt;window.addEventListener('resize',function(){clearTimeout(rt);rt=setTimeout(layout,120)});
-  fromHash();
-  // images change heights as they arrive; re-balance once they are in
-  grid.querySelectorAll('img').forEach(function(i){if(!i.complete)i.addEventListener('load',function(){clearTimeout(rt);rt=setTimeout(layout,60)})});
+  window.addEventListener('hashchange',fromHash);fromHash();
 })();
 </script>

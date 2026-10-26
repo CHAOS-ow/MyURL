@@ -1,0 +1,13 @@
+{%- assign p = include.post -%}
+{%- assign w = p.content | strip_html | number_of_words -%}
+<a class="it{% if include.big %} big{% endif %}{% if include.rail %} rail{% endif %}" href="{{ p.url | relative_url }}" data-t="{{ p.topic }}">
+  {%- if p.image and p.topic == "photo" and include.rail != true -%}<img src="{{ p.image | relative_url }}" alt="{{ p.title }}">{%- endif -%}
+  <div class="kicker"><span>{{ p.topic }}</span><time>{{ p.date | date: "%b %Y" }}</time></div>
+  {%- if w < 40 and p.topic != "photo" -%}
+    <p class="q">“{{ p.content | strip_html | strip | truncatewords: 30 }}”</p>
+    <span class="by">{{ p.title }}</span>
+  {%- else -%}
+    <h3>{{ p.title }}</h3>
+    {%- if p.excerpt and include.rail != true -%}<p>{{ p.excerpt | strip_html | truncatewords: 28 }}</p>{%- endif -%}
+  {%- endif -%}
+</a>
