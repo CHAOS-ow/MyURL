@@ -3,6 +3,7 @@ layout: default
 ---
 <div class="notewrap">
   <article class="note sheet" data-t="{{ page.section }}">
+    <a class="back" id="back" href="{{ '/notes/' | relative_url }}#{{ page.section }}">← back</a>
     <div class="kicker">
       <a href="{{ '/notes/' | relative_url }}">Notes</a><span class="sep">/</span><a href="{{ '/notes/' | relative_url }}#{{ page.section }}">{{ page.section }}</a>
       {% if page.updated %}<span class="u">updated {{ page.updated | date: "%b %-d, %Y" }}</span>{% endif %}
@@ -37,6 +38,7 @@ layout: default
   </aside>
 </div>
 <script>
+(function(){var b=document.getElementById('back');if(b&&document.referrer.indexOf(location.origin)===0&&history.length>1){b.addEventListener('click',function(e){e.preventDefault();history.back()})}})();
 (function(){
   var hs=document.querySelectorAll('#note-body h2, #note-body h3'),box=document.getElementById('toc-links');
   if(!hs.length){document.getElementById('toc').hidden=true;return}

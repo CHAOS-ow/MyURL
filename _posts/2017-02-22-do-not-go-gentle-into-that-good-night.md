@@ -1,7 +1,7 @@
 ---
 title: "Do not go gentle into that good night (poem)"
 date: 2017-02-22
-topic: thoughts
+topic: quotes
 related: []
 wordpress: https://myurl.wordpress.com/2017/02/22/do-not-go-gentle-into-that-good-night/
 ---

@@ -28,11 +28,12 @@ topic_colors:
   thoughts: "#2E4B58"
   photo:    "#B0282C"
   finance:  "#3F672B"
-  health:   "#696405"
-  quotes:   "#B0282C"
-  drk:      "#2E4B58"
-  ballet:   "#696405"
-  making:   "#5E889B"
+  health:    "#8B6A3A"
+  quotes:    "#5E889B"
+  summaries: "#696405"
+  drk:       "#2E4B58"
+  ballet:    "#696405"
+  making:    "#5E889B"
 
 plugins:
   - jekyll-feed

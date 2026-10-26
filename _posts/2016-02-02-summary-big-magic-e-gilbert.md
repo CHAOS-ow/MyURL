@@ -1,7 +1,7 @@
 ---
 title: "Summary: Big Magic (E. Gilbert)"
 date: 2016-02-02
-topic: thoughts
+topic: summaries
 related: []
 wordpress: https://myurl.wordpress.com/2016/02/02/summary-big-magic-e-gilbert/
 ---

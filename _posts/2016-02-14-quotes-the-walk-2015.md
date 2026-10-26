@@ -1,7 +1,7 @@
 ---
 title: "Quotes: The Walk (2015)"
 date: 2016-02-14
-topic: thoughts
+topic: quotes
 related: []
 wordpress: https://myurl.wordpress.com/2016/02/14/quotes-the-walk-2015/
 ---

@@ -13,7 +13,7 @@
   --line:rgba(236,233,226,.14); --line-strong:rgba(236,233,226,.4); --rule:#ECE9E2; --tc:#ECE9E2;
   --shadow:0 8px 18px -10px rgba(0,0,0,.6); --shadow-hover:0 16px 28px -12px rgba(0,0,0,.7); color-scheme:dark}
   /* topic colors lifted for dark paper */
-  [data-t="thoughts"],[data-t="drk"]{--tc:#7FB1C2!important}[data-t="photo"],[data-t="quotes"]{--tc:#E07A7A!important}[data-t="finance"]{--tc:#8DBA72!important}[data-t="health"],[data-t="ballet"]{--tc:#C9C04A!important}[data-t="making"]{--tc:#8FC0CF!important}
+  [data-t="thoughts"],[data-t="drk"]{--tc:#7FB1C2!important}[data-t="photo"]{--tc:#E07A7A!important}[data-t="finance"]{--tc:#8DBA72!important}[data-t="health"]{--tc:#D4A96A!important}[data-t="summaries"],[data-t="ballet"]{--tc:#C9C04A!important}[data-t="quotes"]{--tc:#8FC0CF!important}[data-t="making"]{--tc:#8FC0CF!important}
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
@@ -57,6 +57,8 @@ img{max-width:100%;display:block}
 .card:hover .cont{opacity:.5;transform:none}
 
 /* post */
+.back{display:inline-block;font-family:var(--sans);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--muted);margin-bottom:16px}
+.back:hover{color:var(--ink)}
 .post{max-width:720px;margin:40px auto 0;padding:34px clamp(20px,5vw,52px) 40px;border-top:4px solid var(--tc)}
 .post .kicker a:hover{text-decoration:underline}
 .post h1{font-weight:700;font-size:clamp(1.9rem,3.6vw,2.7rem);line-height:1.08;letter-spacing:-.015em;margin:12px 0 22px;text-wrap:balance}

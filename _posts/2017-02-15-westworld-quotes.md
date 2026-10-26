@@ -1,7 +1,7 @@
 ---
 title: "Westworld (quotes)"
 date: 2017-02-15
-topic: thoughts
+topic: quotes
 image: /assets/img/2017/02/westworld-creation-of-adam.webp
 related: []
 wordpress: https://myurl.wordpress.com/2017/02/15/westworld-quotes/

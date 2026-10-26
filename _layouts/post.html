@@ -2,6 +2,7 @@
 layout: default
 ---
 <article class="post sheet" data-t="{{ page.topic }}">
+  <a class="back" id="back" href="{{ '/' | relative_url }}{% if page.topic and page.topic != 'about' %}#{{ page.topic }}{% endif %}">← back</a>
   <div class="kicker">
     <a href="{{ '/' | relative_url }}#{{ page.topic }}">{{ page.topic }}</a>
     <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %-d, %Y" }}</time>
@@ -44,3 +45,6 @@ layout: default
   </nav>
   {% endif %}
 </article>
+<script>
+(function(){var b=document.getElementById('back');if(b&&document.referrer.indexOf(location.origin)===0&&history.length>1){b.addEventListener('click',function(e){e.preventDefault();history.back()})}})();
+</script>
