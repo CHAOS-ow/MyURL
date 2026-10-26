@@ -12,7 +12,7 @@ _drafts/       unpublished (not built unless you run `jekyll serve --drafts`)
 _notes/        reference notes: _notes/<section>/<name>.md -> /notes/<section>/<name>/ (undated; see below)
 _layouts/      default.html (masthead + sections), post.html, note.html (TOC + mentioned-in)
 notes/         the Notes index page
-assets/css/    main.css — "Stone" edition: grey-beige ground, paper sheets, Source Serif 4 + Libre Franklin
+assets/css/    main.css — light grey ground, white sheets, Source Serif 4 + Libre Franklin
 assets/img/    images, by year/month
 _import/       the WordPress export, the import script, and get_images.ps1 (one-time)
 index.html     the wall (all posts; the section nav filters by topic)
